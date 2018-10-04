@@ -1045,6 +1045,9 @@ public final class Utilities {
     }
 
     public static boolean isBlacklistedAppInstalled(Context context) {
+        return false;
+        
+        /*
         final PackageManager pm = context.getPackageManager();
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         for (ApplicationInfo packageInfo : packages) {
@@ -1055,7 +1058,7 @@ public final class Utilities {
             }
         }
 
-        return BLACKLISTED_APPLICATIONS.length == 0;
+        return BLACKLISTED_APPLICATIONS.length == 0;*/
     }
 
     public static void showLawnfeedPopup(final Context context) {
