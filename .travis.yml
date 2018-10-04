@@ -9,6 +9,7 @@ branches:
   except:
     - l10n_alpha2
     - alpha
+if: tag IS blank
 env:
   - MAJOR_MINOR=1.2.0 UPSTREAM_BRANCH=beta
 android:
