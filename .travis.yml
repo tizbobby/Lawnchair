@@ -44,7 +44,7 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
 before_deploy:
-  - "cp app/build/outputs/apk/debug/app-debug.apk Lawnchair-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
+  - "cp app/build/outputs/apk/debug/app-debug.apk Lawnchair-$TRAVIS_BRANCH-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
   - "cp app/build/outputs/mapping/debug/mapping.txt proguard-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.txt"
 deploy:
   - provider: script
