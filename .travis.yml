@@ -9,8 +9,9 @@ branches:
   except:
     - l10n_alpha2
     - alpha
+if: tag IS blank
 env:
-  - MAJOR_MINOR=1.2.0
+  - MAJOR_MINOR=1.2.0 UPSTREAM_BRANCH=alpha
 android:
   components:
     - tools
@@ -26,6 +27,12 @@ before_install:
   - 'git fetch --tags'
 before_script:
   - 'bash scripts/changelog.sh > changelog.txt'
+  # added
+  - git remote add upstream https://github.com/LawnchairLauncher/Lawnchair
+  - git fetch upstream $UPSTREAM_BRANCH
+  - git merge $UPSTREAM_BRANCH
+  - rm -f app/debug.jks
+  - keytool -genkey -v -keystore app/debug.jks -storepass $STORE_PASSWORD -alias Lawnchair -keypass $KEY_PASSWORD -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 script:
   - 'bash ./gradlew assembleDebug check;'
   - 'bash ./gradlew app:assembleRelease check;'
@@ -38,7 +45,7 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
 before_deploy:
-  - "cp app/build/outputs/apk/debug/app-debug.apk Lawnchair-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
+  - "cp app/build/outputs/apk/debug/app-debug.apk Lawnchair-$TRAVIS_BRANCH-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
   - "cp app/build/outputs/mapping/debug/mapping.txt proguard-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.txt"
 deploy:
   - provider: script
@@ -49,6 +56,10 @@ deploy:
   - provider: releases
     skip_cleanup: true
     api_key: $GITHUB_OAUTH_TOKEN
-    file: "Lawnchair-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
+    #added:
+    file: "Lawnchair-$TRAVIS_BRANCH-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
+    #file: "Lawnchair-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
     on:
-      tags: true
+      #added:
+      all_branches: true
+      #old: tags: true
