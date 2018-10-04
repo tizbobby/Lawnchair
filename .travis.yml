@@ -11,6 +11,8 @@ branches:
     - alpha
 env:
   - MAJOR_MINOR=1.2.0
+  # added
+  - UPSTREAM_BRANCH=beta
 android:
   components:
     - tools
@@ -26,6 +28,10 @@ before_install:
   - 'git fetch --tags'
 before_script:
   - 'bash scripts/changelog.sh > changelog.txt'
+  # added
+  - git remote add upstream https://github.com/LawnchairLauncher/Lawnchair
+  - git fetch upstream $UPSTREAM_BRANCH
+  - git merge $UPSTREAM_BRANCH
 script:
   - 'bash ./gradlew assembleDebug check;'
   - 'bash ./gradlew app:assembleRelease check;'
