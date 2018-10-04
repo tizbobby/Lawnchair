@@ -55,6 +55,10 @@ deploy:
   - provider: releases
     skip_cleanup: true
     api_key: $GITHUB_OAUTH_TOKEN
-    file: "Lawnchair-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
+    #added:
+    file: "Lawnchair-$TRAVIS_BRANCH-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
+    #file: "Lawnchair-$MAJOR_MINOR.$TRAVIS_BUILD_NUMBER.apk"
     on:
-      tags: true
+      #added:
+      all_branches: true
+      #old: tags: true
