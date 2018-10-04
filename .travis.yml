@@ -31,7 +31,7 @@ before_script:
   - git fetch upstream $UPSTREAM_BRANCH
   - git merge $UPSTREAM_BRANCH
   - rm -f app/debug.jks
-  - keytool -genkey -v -keystore app/debug.jks -storepass $STORE_PASSWORD -alias Lawnchair -keypass $KEY_PASSWORD -keyalg RSA -keysize 2048 -validity 10000
+  - keytool -genkey -v -keystore app/debug.jks -storepass $STORE_PASSWORD -alias Lawnchair -keypass $KEY_PASSWORD -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 script:
   - 'bash ./gradlew assembleDebug check;'
   - 'bash ./gradlew app:assembleRelease check;'
